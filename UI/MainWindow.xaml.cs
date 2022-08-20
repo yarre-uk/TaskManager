@@ -4,25 +4,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using UI.Models;
+using UI.Services;
 
 namespace UI;
 
 public partial class MainWindow : Window
 {
-    TaskService taskService;
+    private readonly TaskService taskService;
+    private readonly ProcessService processService;
 
     public MainWindow()
     {
         InitializeComponent();
-
         taskService = new TaskService();
+        processService = new ProcessService();
 
-        CurrentTasks.ItemsSource = taskService.MapProcesses(Process.GetProcesses());
-        WatchTasks.ItemsSource = taskService.GetTasks();
+        UpdateList(false);
     }
 
     protected override void OnClosing(CancelEventArgs e)
     {
+        UpdateList(false);
+
         if (this.Visibility != Visibility.Hidden)
         {
             e.Cancel = true;
@@ -37,17 +41,16 @@ public partial class MainWindow : Window
     {
         if (check && Input.Text != "")
         {
-            CurrentTasks.ItemsSource = taskService.MapProcesses(Process.GetProcesses())
+            CurrentTasks.ItemsSource = processService.GetProcess()
                 .Where(x => x.Name.ToLower().Contains(Input.Text.ToLower()));
 
             WatchTasks.ItemsSource = taskService.GetTasks()
-                .Where(x => x.Name.ToLower().Contains(Input.Text.ToLower())).ToArray();
+                .Where(x => x.Name.ToLower().Contains(Input.Text.ToLower()));
         }
 
         else
         {
-            CurrentTasks.ItemsSource = taskService.MapProcesses(Process.GetProcesses());
-
+            CurrentTasks.ItemsSource = processService.GetProcess();
             WatchTasks.ItemsSource = taskService.GetTasks();
         }
 
@@ -59,17 +62,18 @@ public partial class MainWindow : Window
         UpdateList(true);
     }
 
-    private void Input_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    private void Input_TextChanged(object sender, TextChangedEventArgs e)
     {
         UpdateList(true);
     }
 
     private void WatchTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.AddedItems.Count > 0 && Check.IsChecked == true)
+        if (Check.IsChecked == true && e.AddedItems.Count > 0)
         {
-            taskService.Delete(((Task)e.AddedItems[0]!).Name);
+            taskService.Delete(((TaskDTO)e.AddedItems[0]!).Name);
             UpdateList(false);
+            Input.Text = "";
         }
     }
 

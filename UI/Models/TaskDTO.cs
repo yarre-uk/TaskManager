@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace UI;
+namespace UI.Models;
 
-public class Task
+public class TaskDTO
 {
     public string Name { get; set; }
 
@@ -12,9 +12,9 @@ public class Task
     public string CurrentTimeStr => $"{CurrentTime / 60}h {CurrentTime % 60}m";
 
     public bool State { get; set; }
-    public string StateStr => (State) ? "Running" : "Stopped";
+    public string StateStr => State ? "Running" : "Stopped";
 
-    public Task(string name)
+    public TaskDTO(string name)
     {
         Name = name;
     }

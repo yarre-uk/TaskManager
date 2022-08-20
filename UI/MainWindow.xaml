@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+        Title="MainWindow" Height="450" Width="602">
     <Grid RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Width="600">
-        <ListView Margin="357,10,24,65" x:Name="CurrentTasks" SelectionChanged="CurrentTasks_SelectionChanged">
+        <ListView Margin="362,10,0,65" x:Name="CurrentTasks" SelectionChanged="CurrentTasks_SelectionChanged" HorizontalAlignment="Left" Width="219">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
@@ -15,10 +15,10 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="Update" Content="Update" Margin="497,0,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="53" Height="50" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="Input" TextWrapping="Wrap" Width="135" HorizontalAlignment="Left" Margin="357,0,0,10" FontSize="16" TextChanged="Input_TextChanged" Height="50" VerticalAlignment="Bottom" TextAlignment="Center"/>
+        <Button x:Name="Update" Content="Update" Margin="502,0,45,10" Click="Button_Click" Height="50" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="Input" TextWrapping="Wrap" Margin="362,0,0,10" FontSize="16" TextChanged="Input_TextChanged" Height="50" VerticalAlignment="Bottom" TextAlignment="Center" HorizontalAlignment="Left" Width="135"/>
 
-        <ListView x:Name="WatchTasks" Margin="10,10,248,10" SelectionChanged="WatchTasks_SelectionChanged">
+        <ListView x:Name="WatchTasks" Margin="15,10,0,10" SelectionChanged="WatchTasks_SelectionChanged" HorizontalAlignment="Left" Width="342">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}" />
@@ -28,6 +28,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <CheckBox x:Name="Check" Content="" HorizontalAlignment="Left" Margin="556,392,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="Check" Content="" Margin="561,0,0,27" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20"/>
     </Grid>
 </Window>
