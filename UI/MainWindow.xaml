@@ -6,29 +6,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
     <Grid RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Width="600">
-        <ListView Margin="275,10,24,121" x:Name="CurrentTasks">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding ProcessName}" />
-                    <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Memory" Width="80" DisplayMemberBinding="{Binding PrivateMemorySize64}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <Button x:Name="Update" Content="Update List" Margin="465,0,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="111" Height="50" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="Input" TextWrapping="Wrap" Width="185" HorizontalAlignment="Left" Margin="275,0,0,10" FontSize="16" TextChanged="Input_TextChanged" Height="50" VerticalAlignment="Bottom" TextAlignment="Center"/>
-
-        <ListView x:Name="WatchTasks" Margin="10,10,334,10">
+        <ListView Margin="357,10,24,65" x:Name="CurrentTasks" SelectionChanged="CurrentTasks_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Time" Width="100" DisplayMemberBinding="{Binding TimeStr}" />
+                    <GridViewColumn Header="Memory" Width="70" DisplayMemberBinding="{Binding MemoryStr}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="NameInput" HorizontalAlignment="Left" Margin="275,0,0,66" TextWrapping="Wrap" Width="185" Height="50" VerticalAlignment="Bottom" FontSize="16" TextAlignment="Center"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="465,0,0,66" VerticalAlignment="Bottom" Height="50" Width="52" Click="Button_Click_1"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="524,0,0,66" VerticalAlignment="Bottom" Height="50" Width="52" Click="Button_Click_2"/>
+
+        <Button x:Name="Update" Content="Update List" Margin="497,0,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="79" Height="50" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="Input" TextWrapping="Wrap" Width="135" HorizontalAlignment="Left" Margin="357,0,0,10" FontSize="16" TextChanged="Input_TextChanged" Height="50" VerticalAlignment="Bottom" TextAlignment="Center"/>
+
+        <ListView x:Name="WatchTasks" Margin="10,10,248,10" SelectionChanged="WatchTasks_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Full Time" Width="90" DisplayMemberBinding="{Binding FullTimeStr}" />
+                    <GridViewColumn Header="Current Time" Width="80" DisplayMemberBinding="{Binding CurrentTimeStr}" />
+                    <GridViewColumn Header="State" Width="60" DisplayMemberBinding="{Binding StateStr}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

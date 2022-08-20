@@ -16,8 +16,8 @@ public partial class MainWindow : Window
 
         taskService = new TaskService();
 
-        CurrentTasks.ItemsSource = Process.GetProcesses();
-        WatchTasks.ItemsSource = taskService.GetTasks().ToArray();
+        CurrentTasks.ItemsSource = taskService.MapProcesses(Process.GetProcesses());
+        WatchTasks.ItemsSource = taskService.GetTasks();
     }
 
     protected override void OnClosing(CancelEventArgs e)
@@ -32,41 +32,53 @@ public partial class MainWindow : Window
         }
     }
 
-    private void UpdateList()
+    private void UpdateList(bool check)
     {
-        CurrentTasks.ItemsSource = Process.GetProcesses()
-            .Where(x => x.ProcessName.ToLower().Contains(Input.Text.ToLower()));
-
-        WatchTasks.ItemsSource = taskService.GetTasks()
-            .Where(x => x.Name.ToLower().Contains(Input.Text.ToLower())).ToArray();
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        if (Input.Text != "")
+        if (check && Input.Text != "")
         {
-            UpdateList();
+            CurrentTasks.ItemsSource = taskService.MapProcesses(Process.GetProcesses())
+                .Where(x => x.Name.ToLower().Contains(Input.Text.ToLower()));
+
+            WatchTasks.ItemsSource = taskService.GetTasks()
+                .Where(x => x.Name.ToLower().Contains(Input.Text.ToLower())).ToArray();
         }
 
         else
         {
-            CurrentTasks.ItemsSource = Process.GetProcesses();
-            WatchTasks.ItemsSource = taskService.GetTasks().ToArray();
+            CurrentTasks.ItemsSource = taskService.MapProcesses(Process.GetProcesses());
+
+            WatchTasks.ItemsSource = taskService.GetTasks();
         }
+
+        taskService.CheckState();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        UpdateList(true);
     }
 
     private void Input_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
-        UpdateList();
+        UpdateList(true);
     }
 
-    private void Button_Click_1(object sender, RoutedEventArgs e)
+    private void WatchTasks_SelectionChanged(object sender, dynamic e)
     {
-        taskService.Add(NameInput.Text);
+        if (e.AddedItems.Length > 0)
+        {
+            taskService.Delete(e.AddedItems[0].Name);
+            UpdateList(false);
+        }
     }
 
-    private void Button_Click_2(object sender, RoutedEventArgs e)
+    private void CurrentTasks_SelectionChanged(object sender, dynamic e)
     {
-        taskService.Delete(NameInput.Text);
+        if (e.AddedItems.Length > 0)
+        {
+            taskService.Add(e.AddedItems[0].Name);
+            UpdateList(false);
+            Input.Text = "";
+        }
     }
 }

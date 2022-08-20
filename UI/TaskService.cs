@@ -44,13 +44,28 @@ public class TaskService
         });
     }
 
-    public List<Task> GetTasks()
+    public Task[] GetTasks()
     {
-        return tasks;
+        return tasks.ToArray().OrderByDescending(x => x.FullTime).ToArray();
+    }
+
+    public ProcessDTO[] MapProcesses(Process[] p)
+    {
+        ProcessDTO[] res = new ProcessDTO[p.Length];
+
+        for (int i = 0; i < p.Length; i++)
+        {
+            var nP = new ProcessDTO(p[i].ProcessName, p[i].PrivateMemorySize64);
+            res[i] = nP;
+        }
+
+        return res.OrderByDescending(x => x.Memory).ToArray();
     }
 
     public void Start()
     {
+        tasks.ForEach(x => x.CurrentTime = 0);
+
         while (true)
         {
             var wait = System.Threading.Tasks.Task.Delay(60000);
@@ -62,8 +77,13 @@ public class TaskService
 
                 if (process != null)
                 {
-                    task.Time++;
+                    task.FullTime++;
+                    task.CurrentTime++;
+                    task.State = true;
+                    continue;
                 }
+
+                task.State = false;
             }
 
             using (var sw = new StreamWriter(path))
@@ -75,9 +95,36 @@ public class TaskService
         }
     }
 
+    public void CheckState()
+    {
+        for (int i = 0; i < tasks.Count; i++)
+        {
+            var task = tasks[i];
+            var process = Process.GetProcessesByName(task.Name).FirstOrDefault();
+
+            if (process != null)
+            {
+                task.State = true;
+                continue;
+            }
+
+            task.State = false;
+        }
+
+        using (var sw = new StreamWriter(path))
+        {
+            sw.WriteLine(JsonConvert.SerializeObject(tasks));
+        }
+    }
+
     public void Add(string name)
     {
         if (tasks.Where(x => x.Name == name).Any())
+        {
+            return;
+        }
+
+        if (Process.GetProcessesByName(name).FirstOrDefault() == null)
         {
             return;
         }
