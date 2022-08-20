@@ -15,7 +15,7 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="Update" Content="Update List" Margin="497,0,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="79" Height="50" VerticalAlignment="Bottom"/>
+        <Button x:Name="Update" Content="Update" Margin="497,0,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="53" Height="50" VerticalAlignment="Bottom"/>
         <TextBox x:Name="Input" TextWrapping="Wrap" Width="135" HorizontalAlignment="Left" Margin="357,0,0,10" FontSize="16" TextChanged="Input_TextChanged" Height="50" VerticalAlignment="Bottom" TextAlignment="Center"/>
 
         <ListView x:Name="WatchTasks" Margin="10,10,248,10" SelectionChanged="WatchTasks_SelectionChanged">
@@ -28,5 +28,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <CheckBox x:Name="Check" Content="" HorizontalAlignment="Left" Margin="556,392,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

@@ -17,7 +17,7 @@ public class TaskService
         try
         {
             using var sr = new StreamReader(path);
-            tasks = JsonConvert.DeserializeObject<List<Task>>(sr.ReadToEnd())!;
+            tasks = JsonConvert.DeserializeObject<List<Task>>(sr.ReadToEnd(), new JsonSerializerSettings() { Formatting = Formatting.Indented })!;
 
             if (tasks.Count == 0)
             {
@@ -35,7 +35,7 @@ public class TaskService
             };
 
             using var sw = new StreamWriter(path);
-            sw.WriteLine(JsonConvert.SerializeObject(tasks));
+            sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
         }
 
         System.Threading.Tasks.Task.Run(() =>
@@ -88,7 +88,7 @@ public class TaskService
 
             using (var sw = new StreamWriter(path))
             {
-                sw.WriteLine(JsonConvert.SerializeObject(tasks));
+                sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
             }
 
             wait.Wait();
@@ -113,7 +113,7 @@ public class TaskService
 
         using (var sw = new StreamWriter(path))
         {
-            sw.WriteLine(JsonConvert.SerializeObject(tasks));
+            sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
         }
     }
 
@@ -133,7 +133,7 @@ public class TaskService
 
         using (var sw = new StreamWriter(path))
         {
-            sw.WriteLine(JsonConvert.SerializeObject(tasks));
+            sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
         }
     }
 
@@ -142,6 +142,6 @@ public class TaskService
         tasks = tasks.Where(x => x.Name != name).ToList();
 
         using var sw = new StreamWriter(path);
-        sw.WriteLine(JsonConvert.SerializeObject(tasks));
+        sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
     }
 }

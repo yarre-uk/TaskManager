@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace UI;
 
@@ -63,20 +64,20 @@ public partial class MainWindow : Window
         UpdateList(true);
     }
 
-    private void WatchTasks_SelectionChanged(object sender, dynamic e)
+    private void WatchTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.AddedItems.Length > 0)
+        if (e.AddedItems.Count > 0 && Check.IsChecked == true)
         {
-            taskService.Delete(e.AddedItems[0].Name);
+            taskService.Delete(((Task)e.AddedItems[0]!).Name);
             UpdateList(false);
         }
     }
 
-    private void CurrentTasks_SelectionChanged(object sender, dynamic e)
+    private void CurrentTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.AddedItems.Length > 0)
+        if (e.AddedItems.Count > 0 && Check.IsChecked == true)
         {
-            taskService.Add(e.AddedItems[0].Name);
+            taskService.Add(((ProcessDTO)e.AddedItems[0]!).Name);
             UpdateList(false);
             Input.Text = "";
         }
