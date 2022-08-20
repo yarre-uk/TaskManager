@@ -1,0 +1,34 @@
+﻿<Window x:Class="UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="600">
+    <Grid RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Width="600">
+        <ListView Margin="275,10,24,121" x:Name="CurrentTasks">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding ProcessName}" />
+                    <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Memory" Width="80" DisplayMemberBinding="{Binding PrivateMemorySize64}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="Update" Content="Update List" Margin="465,0,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="111" Height="50" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="Input" TextWrapping="Wrap" Width="185" HorizontalAlignment="Left" Margin="275,0,0,10" FontSize="16" TextChanged="Input_TextChanged" Height="50" VerticalAlignment="Bottom" TextAlignment="Center"/>
+
+        <ListView x:Name="WatchTasks" Margin="10,10,334,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Time" Width="100" DisplayMemberBinding="{Binding TimeStr}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox x:Name="NameInput" HorizontalAlignment="Left" Margin="275,0,0,66" TextWrapping="Wrap" Width="185" Height="50" VerticalAlignment="Bottom" FontSize="16" TextAlignment="Center"/>
+        <Button Content="+" HorizontalAlignment="Left" Margin="465,0,0,66" VerticalAlignment="Bottom" Height="50" Width="52" Click="Button_Click_1"/>
+        <Button Content="-" HorizontalAlignment="Left" Margin="524,0,0,66" VerticalAlignment="Bottom" Height="50" Width="52" Click="Button_Click_2"/>
+    </Grid>
+</Window>
