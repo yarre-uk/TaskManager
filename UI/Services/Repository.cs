@@ -12,10 +12,16 @@ namespace TaskManager.Services;
 public class Repository
 {
     private readonly string path = Directory.GetCurrentDirectory() + @"\save.txt";
+    private readonly string dumpPath = Directory.GetCurrentDirectory() + @"\saveDump.txt";
 
     public void Save(List<TaskDTO> tasks)
     {
         using (var sw = new StreamWriter(path))
+        {
+            sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
+        }
+
+        using (var sw = new StreamWriter(dumpPath))
         {
             sw.WriteLine(JsonConvert.SerializeObject(tasks, new JsonSerializerSettings() { Formatting = Formatting.Indented }));
         }

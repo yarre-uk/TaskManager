@@ -10,7 +10,7 @@ public class ProcessDTO
     {
         get
         {
-            string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
+            string[] Suffix = { "B", "KB", "MB", "GB" };
             long bytes = Memory;
             double dblSByte = bytes;
             int i;

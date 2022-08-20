@@ -2,26 +2,27 @@
 using System.Drawing;
 using System.IO;
 using System.Windows;
+using Forms = System.Windows.Forms;
 
 namespace UI;
 
 public partial class App : Application
 {
-    System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
+    Forms.NotifyIcon ico = new Forms.NotifyIcon();
     public App()
     {
-        nIcon.Icon = new Icon(Directory.GetCurrentDirectory() + @"\ico.ico");
-        nIcon.Visible = true;
+        ico.Icon = new Icon(Directory.GetCurrentDirectory() + @"\ico.ico");
+        ico.Visible = true;
 
-        nIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-        nIcon.ContextMenuStrip.Items.Add("Close", null, (o, e) => { MainWindow.Close(); });
+        ico.ContextMenuStrip = new Forms.ContextMenuStrip();
+        ico.ContextMenuStrip.Items.Add("Close", null, (o, e) => { MainWindow.Close(); });
 
-        nIcon.Click += nIcon_Click;
+        ico.Click += IcoClick!;
     }
 
-    void nIcon_Click(object sender, EventArgs e)
+    void IcoClick(object sender, dynamic e)
     {
-        if (((dynamic)e).Button == System.Windows.Forms.MouseButtons.Left)
+        if (e.Button == Forms.MouseButtons.Left)
         {
             if (MainWindow.Visibility != Visibility.Collapsed)
             {
